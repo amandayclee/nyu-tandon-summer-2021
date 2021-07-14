@@ -1,0 +1,999 @@
+\documentclass[11pt]{article}
+\usepackage{fullpage}
+\usepackage{amsmath,amsfonts,amsthm,amssymb}
+\usepackage{url}
+\usepackage[demo]{graphicx}
+\usepackage{caption} 
+\usepackage{algpseudocode}
+\usepackage{bbm}
+\usepackage{float}
+\usepackage{framed}
+\usepackage{enumerate}
+\usepackage{color}
+\usepackage[colorlinks=true, linkcolor=red, urlcolor=blue, citecolor=blue]{hyperref}
+\usepackage{array,mathtools}
+\usepackage{cancel}
+
+\DeclareMathOperator*{\E}{\mathbb{E}}
+\let\Pr\relax
+\DeclareMathOperator*{\Pr}{\mathbb{P}}
+\DeclareMathOperator*{\R}{\mathbb{E}}
+
+\topmargin 0pt
+\advance \topmargin by -\headheight
+\advance \topmargin by -\headsep
+\textheight 8.9in
+\oddsidemargin 0pt
+\evensidemargin \oddsidemargin
+\marginparwidth 0.5in
+\textwidth 6.5in
+
+\parindent 0in
+\parskip 1.5ex
+
+\newcommand{\homework}[2]{
+	\noindent
+	\begin{center}
+		\framebox{
+			\vbox{
+				\hbox to 6.50in { {\bf NYU Computer Science Bridge to Tandon Course} \hfill Winter 2021 }
+				\vspace{4mm}
+				\hbox to 6.50in { {\Large \hfill Homework #1  \hfill} }
+				\vspace{2mm}
+				\hbox to 6.50in { {Name: #2 \hfill} }
+			}
+		}
+	\end{center}
+	\vspace*{4mm}
+}
+
+\def\unsignedbytecalc#1{%
+\par\smallskip
+\smallskip
+\gdef\result{}%
+$\left.\begin{array}{r@{\quad}|c}\udbc{#1}\end{array}\right\}\mathbf{\result_2}$\par}
+
+\makeatletter
+
+\def\udbc#1{%
+\ifnum#1=\z@
+\expandafter\@gobble
+\else
+\expandafter\@firstofone
+\fi
+{2)\!\underline{\,#1}&\edef\r{\ifodd#1 1\else 0\fi}\r\xdef\result{\r\result}\\
+\expandafter\udbc\expandafter{\the\numexpr(\ifodd#1 #1-1\else#1\fi)/2\relax}%
+}}
+
+\newcommand*{\carry}[1][1]{\overset{#1}}
+\newcolumntype{B}[1]{r*{#1}{@{\,}r}}
+\renewcommand*{\proofname}{Solution}
+\renewcommand\qedsymbol{$\blacksquare$}
+
+\begin{document}
+	
+	\homework{1}{Yun-Ping Du}
+	
+	\section*{Question 1}
+	\begin{enumerate}[A.]
+        \item Convert the following numbers to their decimal representation. Show your work.
+	    \begin{enumerate}[1.]
+	        \item $10011011_2$
+	            \begin{proof}
+	                \begin{equation*}
+                        \begin{split}
+                            10011011_2 &= 2^7 + 2^4 + 2^3 + 2^1 + 2^0 \\
+                                       &= 128 + 16 + 8 + 2 + 1 \\
+                                       &= \mathbf{155}
+                        \end{split}
+                    \end{equation*}
+	            \end{proof}
+            \item $456_7$
+                \begin{proof}
+                    \begin{equation*}
+                        \begin{split}
+                            456_7 &= 4 \times 7^2 + 5 \times 7^1 + 6 \times 7^0 \\
+                                  &= 196 + 35 + 6 \\
+                                  &= \mathbf{237}
+                        \end{split}
+                    \end{equation*}
+                \end{proof}
+            \item $38\text{A}_{16}$
+                \begin{proof}
+                    \begin{equation*}
+                        \begin{split}
+                            38\text{A}_{16} &= 3 \times 16^2 + 8 \times 16^1 + 10 \times 16^0 \\
+                                            &= 768 + 128 + 10 \\
+                                            &= \mathbf{906}
+                        \end{split}
+                    \end{equation*}
+                \end{proof}
+            \item $2214_5$
+            \begin{proof}
+                \begin{equation*}
+                    \begin{split}
+                        2214_5 &= 2 \times 5^3 + 2 \times 5^2 + 1 \times 5^1 + 4 \times 5^0 \\
+                               &= 250 + 50 + 5 + 4 \\
+                               &= \mathbf{309}
+                    \end{split}
+                \end{equation*}
+            \end{proof}
+	    \end{enumerate}
+	    \item Convert the following numbers to their binary representation:
+	    \begin{enumerate}[1.]
+	        \item $69_{10}$
+                \begin{proof}
+                    Recursively divide the quotients and collect the remainders
+                    \begin{center}
+        	            \unsignedbytecalc{69}
+                    \end{center}
+                    Thus the binary representation of $69_{10}$ is $\mathbf{1000101_2}$.
+        	    \end{proof}
+	        \item $485_{10}$
+	            \begin{proof}
+	                Recursively divide the quotients and collect the remainders
+        	        \begin{center}
+        	            \unsignedbytecalc{485}
+        	        \end{center}
+        	        Thus the binary representation of $485_{10}$ is $\mathbf{111100101_2}$.
+	            \end{proof}
+	        \item $6\text{D}1\text{A}_{16}$
+	            \begin{proof}
+	                We first obtain the binary representation of each digit
+        	        \begin{equation*}
+                        \begin{split}
+                            6_{16} &= 0110_2 \\
+                            \text{D}_{16} &= 1101_2 \\
+                            1_{16} &= 0001_2 \\
+                            \text{A}_{16} &= 1010_2 \\
+                        \end{split}
+                    \end{equation*}
+                    Thus the binary representation of $6\text{D}1\text{A}_{16}$ is $\mathbf{110110100011010_2}$.
+	            \end{proof}
+	    \end{enumerate}
+	    
+	    \newpage
+	    
+	    \item Convert the following numbers to their hexadecimal representation:
+	    \begin{enumerate}[1.]
+	        \item $1101011_2$
+	            \begin{proof}
+	                Since we have
+        	        \begin{align*}
+        	            0110_2 &= 6_{16} \\
+        	            1011_2 &= \text{B}_{16}
+        	        \end{align*}
+        	        thus the hexadecimal representation of $1101011_2$ is $\mathbf{6B_{16}}$.
+	            \end{proof}
+	        \item $895_{10}$
+	            \begin{proof}
+	                Recursively divide the quotients and collect the remainders
+        	        \begin{align*}
+        	            895 \div 16 &= 55 \text{ R} 15 \rightarrow \text{F}_{16} \\
+        	            55 \div 16 &= 3 \text{ R} 7 \rightarrow 7_{16} \\
+        	            3 \div 16 &= 0 \text{ R} 3 \rightarrow 3_{16}
+        	        \end{align*}
+        	        Thus the hexadecimal representation of $895_{10}$ is $\mathbf{37F_{16}}$.
+	            \end{proof}
+	    \end{enumerate}
+	\end{enumerate}
+	
+	\newpage
+
+	\section*{Question 2}
+	Solve the following, do all calculation in the given base. Show your work.
+	\begin{enumerate}[1.]
+	    \item $7566_8 + 4515_8 =$
+	        \begin{proof}
+        	    \begin{equation*}
+                \begin{array}{B1}
+                    \carry 7 \carry 5 \carry 66_8 \\
+                    {} + 4515_8 \\ \hline
+                    14303_8 \\
+                \end{array}
+                \end{equation*}
+	        \end{proof}
+	    \item $10110011_2 + 1101_2 =$
+	    \begin{proof}
+	        \begin{equation*}
+            \begin{array}{B1}
+                1 \carry 0 \carry 1 \carry 1 \carry 0 \carry 0 \carry 11_2 \\
+                {} + 00001101_2 \\ \hline
+                11000000_2 \\
+            \end{array}
+            \end{equation*}
+	    \end{proof}
+	    \item $7\text{A}66_{16} + 45\text{C}5_{16} =$
+	        \begin{proof}
+    	        \begin{equation*}
+                \begin{array}{B1}
+                    \mathrm{\carry 7 \carry A66_{16}} \\
+                    {} + \mathrm{45C5_{16}} \\ \hline
+                    \mathrm{C02B_{16}} \\
+                \end{array}
+                \end{equation*}
+	        \end{proof}
+	    \item $3022_5 - 2433_5 =$
+	        \begin{proof}
+    	        \begin{equation*}
+                \begin{array}{B1}
+                    \carry[2]{\cancel{3}} \carry[4]{\cancel{0}} \carry[1]{\cancel{2}} 2_5 \\
+                    {} - 2433_5 \\ \hline
+                    34_5 \\
+                \end{array}
+                \end{equation*}
+	        \end{proof}
+	\end{enumerate}
+	
+	\newpage
+	
+	\section*{Question 3}
+	\begin{enumerate}[A.]
+	    \item Convert the following numbers to their 8-bit two’s complement representation. Show your work.
+	    \begin{enumerate}[1.]
+	        \item $124_{10}$
+	            \begin{proof}
+	                We first obtain the binary representation of $124_{10}$
+        	        \begin{center}
+        	            \unsignedbytecalc{124}
+        	        \end{center}
+        	        Thus the 8-bit two's complement representation of $124_{10}$ is $\mathbf{01111100}$.
+	            \end{proof}
+	        \item $-124_{10}$
+	            \begin{proof}
+        	        To get the 8-bit two's complement representation of a negative number, we first "flip" the bits (swapping 0s and 1s) of its positive counterpart; the value of 1 is then added to the resulting value (ignoring the overflow). We already know that $124_{10}$ is represented by
+        	        \[
+        	            01111100
+        	        \]
+        	        Flip the bits and we have
+        	        \[
+        	            01111100 \rightarrow 10000011
+        	        \]
+        	        Finally, add 1 to the representation and we have
+        	        \[
+        	            10000011_2 + 1_2 = 10000100_2
+        	        \]
+        	        Thus the 8-bit two's complement representation of $-124_{10}$ is $\mathbf{10000100}$.
+	            \end{proof}
+	        \item $109_{10}$
+	            \begin{proof}
+	                We first obtain the binary representation of $109_{10}$
+        	        \begin{center}
+        	            \unsignedbytecalc{109}
+        	        \end{center}
+        	        Thus the 8-bit two's complement representation of $109_{10}$ is $\mathbf{01101101}$.
+	            \end{proof}
+	            
+	       \newpage
+
+	        \item $-79_{10}$
+    	        \begin{proof}
+    	            We first obtain the binary representation of $79_{10}$
+    	            \begin{center}
+    	                \unsignedbytecalc{79}
+    	            \end{center}
+    	            Flip the bits and we have
+    	            \[
+    	                01001111 \rightarrow 10110000
+    	            \]
+    	            Finally, add 1 to the representation and we have
+    	            \[
+    	                10110000_2 + 1_2 = 10110001_2
+    	            \]
+    	            Thus the 8-bit two's complement representation of $-79_{10}$ is $\mathbf{10110001}$.
+    	        \end{proof}
+	    \end{enumerate}
+	    \item Convert the following numbers (represented as 8-bit two’s complement) to their decimal representation. Show your work.
+	    \begin{enumerate}[1.]
+	        \item $00011110_{\text{8-bit 2’s comp}}$
+	            \begin{proof}
+	                Since the leftmost bit is $0$, we directly convert the binary representation to the decimal representation
+	                \begin{equation*}
+                        \begin{split}
+                            11110_2 &= 2^4 + 2^3 + 2^2 + 2^1 \\
+                                    &= 16 + 8 + 4 + 2 \\
+                                    &= 30
+                        \end{split}
+                    \end{equation*}
+                    Thus the decimal representation of $00011110_{\text{8-bit 2’s comp}}$ is $\mathbf{30}$.
+	            \end{proof}
+	        \item $11100110_{\text{8-bit 2’s comp}}$
+	            \begin{proof}
+	                Since the leftmost bit is ${1}$, we know that the number is negative. To convert a negative number into its decimal representation, we first subtract 1 from the 8-bit two's complement, flip the bits of the result, and then convert the flipped bits to its decimal representation.
+	                \[
+	                   11100110_2 - 1_2 = 11100101_2
+	                \]
+	                Flip the bits
+	                \[
+	                    11100101 \rightarrow 00011010
+	                \]
+	                Finally we have
+	                \begin{equation*}
+                        \begin{split}
+                            11010_2 &= 2^4 + 2^3 + 2^1 \\
+                                    &= 16 + 8 + 2 \\
+                                    &= 26
+                        \end{split}
+                    \end{equation*}
+                    Thus the decimal representation of $11100110_{\text{8-bit 2’s comp}}$ is $\mathbf{-26}$.
+	            \end{proof}
+	        \item $00101101_{\text{8-bit 2’s comp}}$
+	            \begin{proof}
+	                Since the leftmost bit is $0$, we directly convert the binary representation to the decimal representation
+	                \begin{equation*}
+                        \begin{split}
+                            101101_2 &= 2^5 + 2^3 + 2^2 + 2^0 \\
+                                     &= 32 + 8 + 4 + 1 \\
+                                     &= 45
+                        \end{split}
+                    \end{equation*}
+                    Thus the decimal representation of $00101101_{\text{8-bit 2’s comp}}$ is $\mathbf{45}$.
+	            \end{proof}
+	        \item $10011110_{\text{8-bit 2’s comp}}$
+	            \begin{proof}
+	                Since the leftmost bit is ${1}$, we know that the number is negative. To convert a negative number into its decimal representation, we first subtract 1 from the 8-bit two's complement, flip the bits of the result, and then convert the flipped bits to its decimal representation.
+	                \[
+	                   10011110_2 - 1_2 = 10011101_2
+	                \]
+	                Flip the bits
+	                \[
+	                    10011101 \rightarrow 01100010
+	                \]
+	                Finally we have
+	                \begin{equation*}
+                        \begin{split}
+                            1100010_2 &= 2^6 + 2^5 + 2^1 \\
+                                      &= 64 + 32 + 2 \\
+                                      &= 98
+                        \end{split}
+                    \end{equation*}
+                    Thus the decimal representation of $11100110_{\text{8-bit 2’s comp}}$ is $\mathbf{-98}$.
+	            \end{proof}
+	    \end{enumerate}
+	\end{enumerate}
+	
+	\newpage
+	
+	\section*{Question 4}
+	 Solve the following questions from the Discrete Math zyBook:
+	 
+	 \begin{enumerate}[1.]
+	     \item  Exercise 1.2.4
+	     \begin{enumerate}[(a)]
+	         \setcounter{enumii}{1}
+	         \item
+	            \begin{proof}
+	                \hfill
+	                \begin{center}
+                        \begin{tabular}{ |c|c|c| } 
+                        \hline
+                        $p$ & $q$ & $\neg (p \lor q)$ \\
+                        \hline
+                        T & T & F \\ 
+                        T & F & F \\
+                        F & T & F \\
+                        F & F & T \\
+                        \hline
+                    \end{tabular}
+                    \end{center}
+	            \end{proof}
+	         \item
+	            \begin{proof}
+	                \hfill
+	                \begin{center}
+                        \begin{tabular}{ |c|c|c|c| } 
+                        \hline
+                        $p$ & $q$ & $r$ & $r \lor (p \land \neg q)$ \\
+                        \hline
+                        T & T & T & T \\ 
+                        T & T & F & F \\
+                        T & F & T & T \\
+                        T & F & F & T \\
+                        F & T & T & T \\ 
+                        F & T & F & F \\
+                        F & F & T & T \\
+                        F & F & F & F \\
+                        \hline
+                    \end{tabular}
+                    \end{center}
+	            \end{proof}
+	     \end{enumerate}
+	     \item  Exercise 1.3.4
+	     \begin{enumerate}[(a)]
+	         \setcounter{enumii}{1}
+	         \item
+	            \begin{proof}
+	                \hfill
+	                \begin{center}
+                        \begin{tabular}{ |c|c|c| } 
+                        \hline
+                        $p$ & $q$ & $(p \rightarrow q) \rightarrow (q \rightarrow p)$ \\
+                        \hline
+                        T & T & T \\ 
+                        T & F & T \\
+                        F & T & F \\
+                        F & F & T \\
+                        \hline
+                    \end{tabular}
+                    \end{center}
+	            \end{proof}
+	         \setcounter{enumii}{3}
+	         \item
+	            \begin{proof}
+	                \hfill
+	                \begin{center}
+	                    \begin{tabular}{ |c|c|c| }
+	                    \hline
+	                    $p$ & $q$ & $(p \leftrightarrow q) \oplus (p \leftrightarrow \neg q)$ \\
+	                    \hline
+	                    T & T & T \\
+	                    T & F & T \\
+	                    F & T & T \\
+	                    F & F & T \\
+	                    \hline
+	                    \end{tabular}
+	                \end{center}
+	            \end{proof}
+	     \end{enumerate}
+	 \end{enumerate}
+	 
+	 \newpage
+	 
+	 \section*{Question 5}
+	  Solve the following questions from the Discrete Math zyBook:
+	  
+	  \begin{enumerate}[1.]
+	      \item Exercise 1.2.7
+	      \begin{enumerate}[(a)]
+	          \setcounter{enumii}{1}
+	          \item
+	            \begin{proof}
+	                $(B \land D) \lor (B \land M) \lor (D \land M)$
+	            \end{proof}
+	          \item
+	            \begin{proof}
+	                $B \lor (D \land M)$
+	            \end{proof}
+	      \end{enumerate}
+	      \item Exercise 1.3.7
+	      \begin{enumerate}[(a)]
+	          \setcounter{enumii}{1}
+	          \item
+	            \begin{proof}
+	                $(s \lor v) \rightarrow p$
+	            \end{proof}
+	          \item
+	            \begin{proof}
+	                $p \rightarrow y$
+	            \end{proof}
+	          \item
+	            \begin{proof}
+	                $p \leftrightarrow (s \land y)$
+	            \end{proof}
+	          \item
+	            \begin{proof}
+	                $p \rightarrow (s \lor y)$
+	            \end{proof}
+	      \end{enumerate}
+	      \item Exercise 1.3.9
+	      \begin{enumerate}[(a)]
+	          \setcounter{enumii}{2}
+	          \item
+	            \begin{proof}
+	                $c \rightarrow p$
+	            \end{proof}
+	          \item
+	            \begin{proof}
+	                $c \rightarrow p$
+	            \end{proof} 
+	      \end{enumerate}
+	  \end{enumerate}
+	  
+	  \newpage
+	  
+	  \section*{Question 6}
+	   Solve the following questions from the Discrete Math zyBook:
+	   
+	   \begin{enumerate}[1.]
+	       \item Exercise 1.3.6
+	       \begin{enumerate}[(a)]
+	           \setcounter{enumii}{1}
+	           \item
+	             \begin{proof}
+	                 If Joe is eligible for the honors program, then he maintains a B average.
+	             \end{proof}
+	           \item
+	             \begin{proof}
+	                 If Rajiv can go on the roller coaster, then he is at least four feet tall.
+	             \end{proof}
+	           \item
+	             \begin{proof}
+	                 If Rajiv is at least four feet tall, he can go on the roller coaster.
+	             \end{proof}
+	       \end{enumerate}
+	       \item Exercise 1.3.10 ($p$: T, $q$: False, $r$: unknown)
+	       \begin{enumerate}[(a)]
+	           \setcounter{enumii}{2}
+	           \item $(p \lor r) \leftrightarrow (q \land r)$
+	             \begin{proof}
+	                 False. $(p \lor r)$ is true because $p$ is true. $(q \land r)$ is false because $q$ is false. Thus the biconditional proposition is false regardless of the truth value of $r$.
+	             \end{proof}
+	           \item $(p \land r) \leftrightarrow (q \land r)$
+	             \begin{proof}
+	                 Unknown. Since $q$ is false, $(q \land r)$ is false. However, the truth value of $(p \land r)$ depends on the truth value of $r$.
+	             \end{proof}
+	           \item $p \rightarrow (r \lor q)$
+	             \begin{proof}
+	                 Unknown. The hypothesis is true, but the truth value of the conclusion depends on the truth value of $r$.
+	             \end{proof}
+	           \item $(p \land q) \rightarrow r$
+	             \begin{proof}
+	                 True. The hypothesis is false, thus the conditional proposition is true regardless of the truth value of $r$.
+	             \end{proof}
+	       \end{enumerate}
+	   \end{enumerate}
+	   
+	   \newpage
+	   
+	   \section*{Question 7}
+	   Solve Exercise 1.4.5, sections b – d, from the Discrete Math zyBook:
+	   
+	   \begin{enumerate}[(a)]
+	       \setcounter{enumi}{1}
+	       \item 
+	         \begin{itemize}
+	             \item If Sally did not get the job, then she was late for interview or did not update her resume.
+	             \item If Sally updated her resume and was not late for her interview, then she got the job.
+	         \end{itemize}
+	         \begin{proof}
+	             Logically equivalent.
+	             \begin{itemize}
+	               \item $\neg j \rightarrow (l \lor \neg r)$
+	               \item $(r \land \neg l) \rightarrow j$
+	             \end{itemize}
+	             \begin{center}
+                 \begin{tabular}{ |c|c|c|c|c| } 
+                 \hline
+                 $j$ & $l$ & $r$ & $\neg j \rightarrow (l \lor \neg r)$ & $(r \land \neg l) \rightarrow j$ \\
+                 \hline
+                 T & T & T & T & T \\ 
+                 T & T & F & T & T \\
+                 T & F & T & T & T \\
+                 T & F & F & T & T \\
+                 F & T & T & T & T \\ 
+                 F & T & F & T & T \\
+                 F & F & T & F & F \\
+                 F & F & F & T & T \\
+                 \hline
+                 \end{tabular}
+                 \end{center}
+	         \end{proof}
+	       \item 
+	         \begin{itemize}
+	             \item If Sally got the job then she was not late for her interview.
+	             \item If Sally did not get the job, then she was late for her interview.
+	         \end{itemize}
+	         \begin{proof}
+	             Not logically equivalent.
+	             \begin{itemize}
+	               \item $j \rightarrow \neg l$
+	               \item $\neg j \rightarrow l$
+	             \end{itemize}
+	             \begin{center}
+                 \begin{tabular}{ |c|c|c|c| } 
+                 \hline
+                 $j$ & $l$ & $j \rightarrow \neg l$ & $\neg j \rightarrow l$ \\
+                 \hline
+                 T & T & F & T \\ 
+                 T & F & T & T \\
+                 F & T & T & T \\
+                 F & F & T & F \\
+                 \hline
+                 \end{tabular}
+                 \end{center}
+	         \end{proof}
+	       \newpage
+	       \item 
+	         \begin{itemize}
+	             \item If Sally updated her resume or she was not late for her interview, then she got the job.
+	             \item If Sally got the job, then she updated her resume and was not late for her interview.
+	         \end{itemize}
+	         \begin{proof}
+	             Not logically equivalent.
+	             \begin{itemize}
+	               \item $(r \lor \neg l) \rightarrow j$
+	               \item $j \rightarrow (r \land \neg l)$
+	             \end{itemize}
+	             \begin{center}
+                 \begin{tabular}{ |c|c|c|c|c| } 
+                 \hline
+                 $j$ & $l$ & $r$ & $(r \lor \neg l) \rightarrow j$ & $j \rightarrow (r \land \neg l)$ \\
+                 \hline
+                 T & T & T & T & F \\ 
+                 T & T & F & T & F \\
+                 T & F & T & T & T \\
+                 T & F & F & T & F \\
+                 F & T & T & F & T \\ 
+                 F & T & F & T & T \\
+                 F & F & T & F & T \\
+                 F & F & F & F & T \\
+                 \hline
+                 \end{tabular}
+                 \end{center}
+	         \end{proof}
+	   \end{enumerate}
+	   
+	   \newpage
+	   \section*{Question 8}
+	   Solve the following questions from the Discrete Math zyBook:
+	   \begin{enumerate}[1.]
+	       \item  Exercise 1.5.2
+	       \begin{enumerate}[(a)]
+	           \setcounter{enumii}{2}
+	           \item $(p \rightarrow q) \land (p \rightarrow r) \equiv p \rightarrow (q \land r)$
+	             \begin{proof}
+	                 \begin{align*}
+	                     (p \rightarrow q) \land (p \rightarrow r) &\equiv (\neg p \lor q) \land (\neg p \lor r) \\
+	                     &\equiv  \neg p \lor (q \land r) \\
+	                     &\equiv p \rightarrow (q \land r)
+	                 \end{align*}
+	             \end{proof}
+	           \setcounter{enumii}{5}
+	           \item $\neg(p \lor (\neg p \land q)) \equiv \neg p \land \neg q$
+	             \begin{proof}
+	                 \begin{align*}
+	                     \neg(p \lor (\neg p \land q)) &\equiv \neg((p \lor \neg p ) \land (p \lor q)) \\
+	                     &\equiv \neg(T \land (p \lor q)) \\
+	                     &\equiv \neg(p \lor q) \\
+	                     &\equiv \neg p \land \neg q
+	                 \end{align*}
+	             \end{proof}
+	           \setcounter{enumii}{8}
+	           \item $(p \land q) \rightarrow r \equiv (p \land \neg r) \rightarrow \neg q$
+	             \begin{proof}
+	                 \begin{align*}
+	                     (p \land q) \rightarrow r &\equiv \neg (p \land q) \lor r \\
+	                     &\equiv (\neg p \lor \neg q) \lor r \\
+	                     &\equiv \neg p \lor r \lor \neg q \\
+	                     &\equiv \neg (p \land \neg r) \lor \neg q \\
+	                     &\equiv (p \land \neg r) \rightarrow \neg q
+	                 \end{align*}
+	             \end{proof}
+	       \end{enumerate}
+	       \item  Exercise 1.5.3
+	       \begin{enumerate}[(a)]
+	           \setcounter{enumii}{2}
+	           \item $\neg r \land (\neg r \rightarrow p)$
+	             \begin{proof}
+	                 \begin{align*}
+	                     \neg r \land (\neg r \rightarrow p) &\equiv \neg r \lor (\neg (\neg r) \lor p) \\
+	                     &\equiv \neg r \lor (r \lor p) \\
+	                     &\equiv (\neg r \lor r) \lor p \\
+	                     &\equiv \text{T} \lor p \\
+	                     &\equiv \text{T}
+	                 \end{align*}
+	             \end{proof}
+	           \item $\neg(p \rightarrow q) \rightarrow \neg q$
+	             \begin{proof}
+	                 \begin{align*}
+	                     \neg(p \rightarrow q) \rightarrow \neg q &\equiv \neg (\neg p \lor q) \rightarrow \neg q \\
+	                     &\equiv \neg\neg (\neg p \lor q) \lor \neg q \\
+	                     &\equiv \neg p \lor q \lor \neg q \\
+	                     &\equiv \neg p \lor \text{T} \\
+	                     &\equiv \text{T}
+	                 \end{align*}
+	             \end{proof}
+	       \end{enumerate}
+	   \end{enumerate}
+	   
+	   \newpage
+	   \section*{Question 9}
+	   Solve the following questions from the Discrete Math zyBook:
+	   \begin{enumerate}[1.]
+	       \item  Exercise 1.6.3
+	       \begin{enumerate}[(a)]
+	           \setcounter{enumii}{2}
+	           \item 
+	             \begin{proof}
+	                 $\exists x \: (x = x^2)$
+	             \end{proof}
+	           \item 
+	             \begin{proof}
+	                 $\forall x \: (x \leq x^2)$
+	             \end{proof}
+	       \end{enumerate}
+	       \item  Exercise 1.7.4
+	       \begin{enumerate}[(a)]
+	           \setcounter{enumii}{1}
+	           \item 
+	             \begin{proof}
+	                 $\forall x \: (\neg S(x) \land W(x))$
+	             \end{proof}
+	           \item 
+	             \begin{proof}
+	                 $\forall x \: (S(x) \rightarrow \neg W(x))$
+	             \end{proof}
+	           \item 
+	             \begin{proof}
+	                 $\exists x \: (S(x) \land W(x))$
+	             \end{proof}
+	       \end{enumerate}
+	   \end{enumerate} 
+	   
+	   \newpage
+	   \section*{Question 10}
+	   Solve the following questions from the Discrete Math zyBook:
+	   \begin{enumerate}[1.]
+	       \item  Exercise 1.7.9
+	       \begin{center}
+	           \begin{tabular}{|c|c|c|c|}
+	               \hline
+	                   &  $P(x)$ & $Q(x)$ & $R(x)$ \\
+	               \hline
+	               $a$ & T & T & F \\
+	               $b$ & T & F & F \\
+	               $c$ & F & T & F \\
+	               $d$ & T & T & F \\
+	               $e$ & T & T & T \\
+	               \hline
+	           \end{tabular}
+	       \end{center}
+	       \begin{enumerate}[(a)]
+	           \setcounter{enumii}{2}
+	           \item $\exists x \: ((x = c) \rightarrow P(x))$
+	             \begin{proof}
+	                 True. Example: $a$.
+	             \end{proof}
+	           \item $\exists x \: (Q(x) \land R(x))$
+	             \begin{proof}
+	                 True. Example: $e$.
+	             \end{proof}
+	           \item $Q(a) \land P(d)$
+	             \begin{proof}
+	                 True.
+	             \end{proof}
+	           \item $\forall x \: ((x \neq b) \rightarrow Q(x))$
+	             \begin{proof}
+	                 True.
+	             \end{proof}
+	           \item $\forall x \: (P(x) \lor R(x))$
+	             \begin{proof}
+	                 False. Counterexample: $c$.
+	             \end{proof}
+	           \item $\forall x \: (R(x) \rightarrow P(x))$
+	             \begin{proof}
+	                 True.
+	             \end{proof}
+	           \item $\exists x \: (Q(x) \lor R(x))$
+	             \begin{proof}
+	                 True. Example: $a$.
+	             \end{proof}
+	       \end{enumerate}
+	       \newpage
+	       \item  Exercise 1.9.2
+	       \begin{center}
+	           \begin{tabular}{|c|c|c|c|}
+	           \hline
+                $P$ & 1 & 2 & 3 \\
+               \hline
+                 1  & T & F & T \\
+                 2  & T & F & T \\
+                 3  & T & T & F \\
+               \hline
+	           \end{tabular}
+	           \begin{tabular}{|c|c|c|c|}
+	           \hline
+                $Q$ & 1 & 2 & 3 \\
+               \hline
+                 1  & F & F & F \\
+                 2  & T & T & T \\
+                 3  & T & F & F \\
+               \hline
+	           \end{tabular}
+	           \begin{tabular}{|c|c|c|c|}
+	           \hline
+                $S$ & 1 & 2 & 3 \\
+               \hline
+                 1  & F & F & F \\
+                 2  & F & F & F \\
+                 3  & F & F & F \\
+               \hline
+	           \end{tabular}
+	       \end{center}
+	       \begin{enumerate}[(a)]
+	           \setcounter{enumii}{1}
+	           \item $\exists x \: \forall y \: Q(x, y)$
+	             \begin{proof}
+	                 True. Let $x = 2$, then $Q(x, 1)$, $Q(x, 2)$, and $Q(x, 3)$ are all true.
+	             \end{proof}
+	           \item $\exists x \: \forall y \: P(y, x)$
+	             \begin{proof}
+	                 True. Let $x = 1$, then $P(1, x)$, $P(2, x)$, and $P(3, x)$ are all true.
+	             \end{proof}
+	           \item $\exists x \: \exists y \: S(x, y)$
+	             \begin{proof}
+	                 False. There is no pair $(x, y)$ such that $S(x, y)$ is true.
+	             \end{proof}
+	           \item $\forall x \: \exists y \: Q(x, y)$
+	             \begin{proof}
+	                 False. Let $x = 1$, then there is no $y$ such that $Q(1, y)$ is true.
+	             \end{proof}
+	           \item $\forall x \: \exists y \: P(x, y)$
+	             \begin{proof}
+	                 True. When $x = 1$, let $y = 1$. When $x = 2$, let $y = 1$. When $3 = 1$, let $y = 1$
+	             \end{proof}
+	           \item $\forall x \: \forall y \: P(x, y)$
+	             \begin{proof}
+	                 False. Counterexample: $(x, y) = (1, 2)$.
+	             \end{proof}
+	           \item $\exists x \: \exists y \: Q(x, y)$
+	             \begin{proof}
+	                 True. Example: $(x, y) = (2, 1)$.
+	             \end{proof}
+	           \item $\forall x \: \forall y \: \neg S(x, y)$
+	             \begin{proof}
+	                 True.
+	             \end{proof}
+	       \end{enumerate}
+	   \end{enumerate}
+	   
+	   \newpage
+	   \section*{Question 11}
+	   Solve the following questions from the Discrete Math zyBook:
+	   \begin{enumerate}[1.]
+	       \item  Exercise 1.10.4
+	       \begin{enumerate}[(a)]
+	           \setcounter{enumii}{2}
+	           \item There are two numbers whose sum is equal to their product.
+	             \begin{proof}
+	                 $\exists x \: \exists y \: (x + y = xy)$
+	             \end{proof}
+	           \item The ratio of every two positive numbers is also positive.
+	             \begin{proof}
+	                 $\forall x \: \forall y \: ((x > 0 \land y > 0) \rightarrow x/y > 0)$
+	             \end{proof}
+	           \item The reciprocal of every positive number less than one is greater than one.
+	             \begin{proof}
+	                 $\forall x \: ((x > 0) \land (x < 1) \rightarrow 1/x > 1)$
+	             \end{proof}
+	           \item There is no smallest number.
+	             \begin{proof}
+	                 $\forall x \: \exists y \: (x > y)$
+	             \end{proof}
+	           \item Every number besides 0 has a multiplicative inverse.
+	             \begin{proof}
+	                 $\forall x \: \exists y \: ((x \neq 0) \rightarrow xy = 1)$
+	             \end{proof}
+	       \end{enumerate}
+	       \item  Exercise 1.10.7
+	       \begin{itemize}
+	           \item $P(x, y)$: $x$ knows $y$'s phone number. (A person may or may not know their own phone number.)
+	           \item $D(x)$: $x$ missed the deadline.
+	           \item $N(x)$: $x$ is a new employee.
+	       \end{itemize}
+	       \begin{enumerate}[(a)]
+	           \setcounter{enumii}{2}
+	           \item There is at least one new employee who missed the deadline.
+	             \begin{proof}
+	                 $\exists x \: (N(x) \land D(x))$
+	             \end{proof}
+	           \item Sam knows the phone number of everyone who missed the deadline.
+	             \begin{proof}
+	                 $\forall x \: (D(x) \rightarrow P(\text{Sam}, x))$
+	             \end{proof}
+	           \item There is a new employee who knows everyone's phone number.
+	             \begin{proof}
+	                 $\exists x \: \forall y \: (N(x) \land P(x, y))$
+	             \end{proof}
+	           \item Exactly one new employee missed the deadline.
+	             \begin{proof}
+	                 $\exists x \: \forall y \: ((N(x) \land D(x)) \land (((y \neq x) \land N(y)) \rightarrow \neg D(y)))$
+	             \end{proof}
+	       \end{enumerate}
+	       \newpage
+	       \item  Exercise 1.10.10
+	       \begin{enumerate}[(a)]
+	           \setcounter{enumii}{2}
+	           \item Every student has taken at least one class besides Math 101.
+	             \begin{proof}
+	                 $\forall x \: \exists y \: ((y \neq \text{Math 101}) \land T(x, y))$
+	             \end{proof}
+	           \item There is a student who has taken every math class besides Math 101.
+	             \begin{proof}
+	                 $\exists x \: \forall y \: ((y \neq \text{Math 101}) \rightarrow T(x, y))$
+	             \end{proof}
+	           \item Everyone besides Sam has taken at least two different math classes.
+	             \begin{proof}
+	                 $\forall x \: \exists y \: \exists z \: ((x \neq \text{Sam}) \rightarrow ((y \neq z) \land T(x, y) \land T(x, z)))$
+	             \end{proof}
+	           \item Sam has taken exactly two math classes.
+	             \begin{proof}
+	                 $\exists x \: \exists y \: \forall z \: ((x \neq y) \land T(\text{Sam},x) \land T(\text{Sam},y) \land (((z \neq x) \land (z \neq y)) \rightarrow \neg T(\text{Sam}, z)))$
+	             \end{proof}
+	       \end{enumerate}
+	   \end{enumerate}
+	   
+	   \newpage
+	   \section*{Question 12}
+	   Solve the following questions from the Discrete Math zyBook:
+	   \begin{enumerate}[1.]
+	       \item  Exercise 1.8.2
+	       \begin{itemize}
+	           \item $P(x)$: $x$ was given the placebo
+	           \item $D(x)$: $x$ was given the medication
+	           \item $M(x)$: $x$ had migraines
+	       \end{itemize}
+	       \begin{enumerate}[(a)]
+	           \setcounter{enumii}{1}
+	           \item Every patient was given the medication or the placebo or both.
+	             \begin{proof}
+	             \hfill
+	                 \begin{itemize}
+	                     \item $\forall x \: (D(x) \lor P(x))$
+	                     \item Negation: $\neg \forall x \: (D(x) \lor P(x))$
+	                     \item Applying De Morgan's law: $\exists x \: (\neg D(x) \land \neg P(x))$
+	                     \item English: There is a patient who was not given the medication and the placebo.
+	                 \end{itemize}
+	             \end{proof}
+	           \item There is a patient who took the medication and had migraines.
+	             \begin{proof}
+	             \hfill
+	                 \begin{itemize}
+	                     \item $\exists x \: (D(x) \land M(x))$
+	                     \item Negation: $\neg\exists x \: (D(x) \land M(x))$
+	                     \item Applying De Morgan's law: $\forall x \: (\neg D(x) \lor \neg M(x))$
+	                     \item English: Every patient either did not took the medication or did not have migraines (or both).
+	                 \end{itemize}
+	             \end{proof}
+	           \item Every patient who took the placebo had migraines.
+	             \begin{proof}
+	             \hfill
+	                 \begin{itemize}
+	                     \item $\forall x \: (P(x) \rightarrow M(x))$
+	                     \item Negation: $\neg\forall x \: (P(x) \rightarrow M(x))$
+	                     \item Applying De Morgan's law: $\exists x \: (P(x) \land \neg M(x))$
+	                     \item English: There is a patient who took the placebo and did not have migraines.
+	                 \end{itemize}
+	             \end{proof}
+	           \newpage
+	           \item There is a patient who had migraines and was given the placebo.
+	             \begin{proof}
+	             \hfill
+	                 \begin{itemize}
+	                     \item $\exists x \: (M(x) \land P(x))$
+	                     \item Negation: $\neg\exists x \: (M(x) \land P(x))$
+	                     \item Applying De Morgan's law: $\forall x \: (\neg M(x) \lor \neg P(x))$
+	                     \item English: Every patient either did not had migraines or was not given the placebo (or both).
+	                 \end{itemize}
+	             \end{proof}
+	       \end{enumerate}
+	       \item  Exercise 1.9.4
+	       \begin{enumerate}[(a)]
+	           \setcounter{enumii}{2}
+	           \item $\exists x \: \forall y \: (P(x, y) \rightarrow Q(x, y))$
+	             \begin{proof}
+	                 \begin{align*}
+	                     \neg\exists x \: \forall y \: (P(x, y) \rightarrow Q(x, y)) &\equiv \forall x \: \exists y \: \neg(\neg P(x,y) \lor Q(x,y)) \\
+	                     &\equiv \forall x \: \exists y \: (P(x,y) \land \neg Q(x,y))
+	                 \end{align*}
+	             \end{proof}
+	           \item $\exists x \: \forall y \: (P(x, y) \leftrightarrow P(y, x))$
+	             \begin{proof}
+	                 \begin{align*}
+	                     \neg\exists x \: \forall y \: (P(x, y) \leftrightarrow P(y, x)) &\equiv \forall x \: \exists y \: \neg((P(x,y) \rightarrow P(y,x)) \land ((P(y,x) \rightarrow P(x,y))) \\ 
+	                     &\equiv \forall x \: \exists y \: \neg((\neg P(x,y) \lor P(y,x)) \land (\neg P(y,x) \lor P(x,y))) \\
+	                     &\equiv \forall x \: \exists y \: (\neg(\neg P(x,y) \lor P(y,x)) \lor \neg(\neg P(y,x) \lor P(x,y))) \\
+	                     &\equiv \forall x \: \exists y \: ((P(x,y) \land \neg P(y,x)) \lor (P(y,x) \land \neg P(x,y)))
+	                 \end{align*}
+	             \end{proof}
+	           \item $\exists x \: \exists y \: P(x, y) \land \forall x \forall y \: Q(x, y)$
+	             \begin{proof}
+	                 \begin{align*}
+	                     \neg(\exists x \: \exists y \: P(x, y) \land \forall x \forall y \: Q(x, y)) &\equiv \neg\exists x \: \exists y \: P(x, y) \lor \neg\forall x \forall y \: Q(x, y) \\
+	                     &\equiv \forall x \: \forall y \: \neg P(x,y) \lor \exists x \: \exists y \: \neg Q(x,y)
+	                 \end{align*}
+	             \end{proof}
+	       \end{enumerate}
+	   \end{enumerate}
+
+\end{document}
